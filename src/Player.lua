@@ -6,11 +6,14 @@ Player = class()
 
 function Player:init()
 
-	self.x = 0
+	self.x = 0					-- pixels (world coordinates)
 	self.y = 0
-	self.rot = 0
+	self.rot = 0				-- radians
 
-	self.speed = 600
+	self.targetRot = 0
+
+	self.speed = 60				-- pixels per second
+	self.rotSpeed = math.pi		-- radians per second
 
 	return self
 end
@@ -24,7 +27,7 @@ end
 function Player:draw()
 
 	local img = images["ship"]
-	love.graphics.draw(img, self.x, self.y, self.rot, 1, 1, img:getWidth()/2, img:getHeight()/2)
+	love.graphics.draw(img, self.x, self.y, self.rot + math.pi/2, 1, 1, img:getWidth()/2, img:getHeight()/2)
 
 end
 
@@ -49,14 +52,32 @@ function Player:treatInput(dt)
 		dy = dy + 1
 	end
 
-	-- apply speed
-
-	self.x = self.x + self.speed * dx * dt
-	self.y = self.y + self.speed * dy * dt
-
-	-- rotate
 
 	if not(dx == 0 and dy == 0) then
-		self.rot = math.atan2(dy,dx) + math.pi / 2
+	
+		-- target direction
+
+		self.targetRot = math.atan2(dy,dx)
+
+		-- rotate
+
+		local deltaRot = (self.targetRot - self.rot)
+		deltaRot = (deltaRot + math.pi) % (math.pi * 2) - math.pi
+
+		if math.abs(deltaRot) > 0.01 then
+			local rotDir = deltaRot / math.abs(deltaRot)
+			self.rot = self.rot + rotDir * self.rotSpeed * dt
+		else
+			self.rot = self.targetRot
+		end
+
+		-- apply speed
+
+		local vx,vy = math.cos(self.rot) * self.speed, math.sin(self.rot) * self.speed
+
+		self.x = self.x + self.speed * vx * dt
+		self.y = self.y + self.speed * vy * dt
 	end
+	
+	
 end

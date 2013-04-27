@@ -1,4 +1,5 @@
 require "class"
+require "Player"
 
 Space = class()
 
@@ -9,6 +10,8 @@ function Space:init()
 	self.cameraX = 0
 	self.cameraY = 0
 
+	self.player = Player()
+
 	return self
 end
 
@@ -17,7 +20,7 @@ function Space:draw()
 	love.graphics.translate(-self.cameraX + love.graphics.getWidth() / 2, -self.cameraY + love.graphics.getHeight() / 2)
 
 	self:drawBackground()
-
+	self.player:draw()
 end
 
 function Space:drawBackground()
@@ -41,8 +44,10 @@ end
 
 function Space:update(dt)
 
-	self.cameraX = self.cameraX + 200 * dt
-	self.cameraY = self.cameraY + 250 * dt
+	self.player:update(dt)
+
+	self.cameraX = self.player.x
+	self.cameraY = self.player.y
 
 end
 

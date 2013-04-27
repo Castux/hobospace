@@ -14,6 +14,7 @@ function Space:init()
 	self.player = Player()
 
 	self.asteroids = {}
+	self.bullets = {}
 	self.asteroidWarp = 2000
 
 	for i = 1,1000 do
@@ -23,7 +24,7 @@ function Space:init()
 
 		table.insert(self.asteroids, a)
 	end
-
+	gSpace = self
 	return self
 end
 
@@ -99,3 +100,5 @@ function Space:keypressed(k)
 	self.player:keypressed(k)
 
 end
+
+

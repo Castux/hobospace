@@ -11,6 +11,7 @@ function PlayerBullet:init(vx,vy)
 	self.vx = vx
 	self.vy = vy
 
+	gPlayer = self
 	return self
 end
 

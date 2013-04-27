@@ -1,5 +1,6 @@
 require "class"
 require "Player"
+require "Asteroid"
 
 Space = class()
 
@@ -12,16 +13,25 @@ function Space:init()
 
 	self.player = Player()
 
+	self.asteroids = {}
+
+	for i = 1,100 do
+		table.insert(self.asteroids, Asteroid())
+	end
+
 	return self
 end
 
 function Space:draw()
 
 	love.graphics.push()
-
 	love.graphics.translate(-self.cameraX + love.graphics.getWidth() / 2, -self.cameraY + love.graphics.getHeight() / 2)
 
 	self:drawBackground()
+
+	for i,v in ipairs(self.asteroids) do
+		v:draw()
+	end
 	self.player:draw()
 
 	love.graphics.pop()
@@ -49,6 +59,10 @@ function Space:drawBackground()
 end
 
 function Space:update(dt)
+
+	for i,v in ipairs(self.asteroids) do
+		v:update(dt)
+	end
 
 	self.player:update(dt)
 

@@ -51,3 +51,10 @@ function Space:update(dt)
 
 end
 
+function Space:keypressed(k)
+
+	-- register here all objects who are interested in keypresses
+
+	self.player:keypressed(k)
+
+end

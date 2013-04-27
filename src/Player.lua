@@ -1,10 +1,14 @@
 require "class"
+require "Shield"
 
 local LK = love.keyboard
+local LG = love.graphics
 
 Player = class()
 
 function Player:init()
+
+	-- movement related variables
 
 	self.x = 0					-- pixels (world coordinates)
 	self.y = 0
@@ -17,6 +21,12 @@ function Player:init()
 	self.maxSpeed = 60			-- pixels per second
 	self.accel = 40				-- pixels/s^2
 
+	-- subsystems
+
+	self.subsystems = {
+		shield = Shield()
+	}
+
 	return self
 end
 
@@ -24,12 +34,30 @@ function Player:update(dt)
 
 	self:treatInput(dt)
 
+	for k,v in pairs(self.subsystems) do
+		if v.update then
+			v:update(dt)
+		end
+	end
+
 end
 
 function Player:draw()
 
+	LG.push()
+	LG.translate(self.x, self.y)
+	LG.rotate(self.rot + math.pi/2)
+
 	local img = images["ship"]
-	love.graphics.draw(img, self.x, self.y, self.rot + math.pi/2, 1, 1, img:getWidth()/2, img:getHeight()/2)
+	LG.draw(img, 0, 0, 0, 1, 1, img:getWidth()/2, img:getHeight()/2)
+
+	for k,v in pairs(self.subsystems) do
+		if v.draw then
+			v:draw()
+		end
+	end
+
+	LG.pop()
 
 end
 
@@ -91,4 +119,14 @@ function Player:treatInput(dt)
 	self.x = self.x + self.speed * vx * dt
 	self.y = self.y + self.speed * vy * dt
 	
+end
+
+function Player:keypressed(key)
+
+	for k,v in pairs(self.subsystems) do
+		if v.keypressed then
+			v:keypressed(key)
+		end
+	end
+
 end

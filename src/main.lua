@@ -22,6 +22,12 @@ function love.update(dt)
 
 end
 
+function love.keypressed(k)
+
+	space:keypressed(k)
+
+end
+
 function loadImages()
 
 	images = {}

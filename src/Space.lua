@@ -14,9 +14,14 @@ function Space:init()
 	self.player = Player()
 
 	self.asteroids = {}
+	self.asteroidWarp = 2000
 
-	for i = 1,100 do
-		table.insert(self.asteroids, Asteroid())
+	for i = 1,1000 do
+		local a = Asteroid()
+		a.x = (math.random() - 0.5) * self.asteroidWarp * 2
+		a.y = (math.random() - 0.5) * self.asteroidWarp * 2
+
+		table.insert(self.asteroids, a)
 	end
 
 	return self
@@ -60,8 +65,24 @@ end
 
 function Space:update(dt)
 
+	local border = 1000
+
 	for i,v in ipairs(self.asteroids) do
 		v:update(dt)
+
+		-- let's do the time warp agaiiiiiin
+
+		if v.x - self.cameraX > border then
+			v.x = v.x - 2*border
+		elseif v.x - self.cameraX < -border then
+			v.x = v.x + 2*border
+		end
+
+		if v.y - self.cameraY > border then
+			v.y = v.y - 2*border
+		elseif v.y - self.cameraY < -border then
+			v.y = v.y + 2*border
+		end
 	end
 
 	self.player:update(dt)

@@ -71,3 +71,15 @@ function Controls:keypressed(k)
 	end
 
 end
+
+function Controls:drawHUD()
+
+	local txt = ""
+
+	for k,v in pairs(self.active) do
+		txt = txt .. k .. ","
+	end 
+
+	love.graphics.print("Controls system functional: " .. txt, 20, 20)
+
+end

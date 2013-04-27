@@ -17,10 +17,16 @@ end
 
 function Space:draw()
 
+	love.graphics.push()
+
 	love.graphics.translate(-self.cameraX + love.graphics.getWidth() / 2, -self.cameraY + love.graphics.getHeight() / 2)
 
 	self:drawBackground()
 	self.player:draw()
+
+	love.graphics.pop()
+
+	self.player:drawHUD()
 end
 
 function Space:drawBackground()

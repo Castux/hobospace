@@ -115,3 +115,13 @@ function Player:keypressed(key)
 	end
 
 end
+
+function Player:drawHUD()
+
+	for k,v in pairs(self.subsystems) do
+		if v.drawHUD then
+			v:drawHUD()
+		end
+	end
+
+end

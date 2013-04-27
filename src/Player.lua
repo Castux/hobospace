@@ -11,9 +11,11 @@ function Player:init()
 	self.rot = 0				-- radians
 
 	self.targetRot = 0
-
-	self.speed = 60				-- pixels per second
 	self.rotSpeed = math.pi		-- radians per second
+
+	self.speed = 0
+	self.maxSpeed = 60			-- pixels per second
+	self.accel = 40				-- pixels/s^2
 
 	return self
 end
@@ -71,13 +73,22 @@ function Player:treatInput(dt)
 			self.rot = self.targetRot
 		end
 
-		-- apply speed
+		-- accelerate
 
-		local vx,vy = math.cos(self.rot) * self.speed, math.sin(self.rot) * self.speed
-
-		self.x = self.x + self.speed * vx * dt
-		self.y = self.y + self.speed * vy * dt
-	end
+		self.speed = math.min(self.maxSpeed, self.speed + self.accel * dt)
 	
+	else
+
+		-- decelerate
+
+		self.speed = math.max(0, self.speed - self.accel * dt)
+
+	end
+
+	-- apply speed
+
+	local vx,vy = math.cos(self.rot) * self.speed, math.sin(self.rot) * self.speed
+	self.x = self.x + self.speed * vx * dt
+	self.y = self.y + self.speed * vy * dt
 	
 end

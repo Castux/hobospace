@@ -1,5 +1,6 @@
 require "class"
 require "Shield"
+require "Controls"
 
 local LK = love.keyboard
 local LG = love.graphics
@@ -24,7 +25,8 @@ function Player:init()
 	-- subsystems
 
 	self.subsystems = {
-		shield = Shield()
+		shield = Shield(),
+		controls = Controls(),
 	}
 
 	return self
@@ -63,31 +65,13 @@ end
 
 function Player:treatInput(dt)
 
-	local dx = 0
-	local dy = 0
+	local dir = self.subsystems.controls:checkInput()
 
-	if LK.isDown("a") or LK.isDown("left") then
-		dx = dx - 1
-	end
-
-	if LK.isDown("d") or LK.isDown("right") then
-		dx = dx + 1
-	end
-
-	if LK.isDown("w") or LK.isDown("up") then
-		dy = dy - 1
-	end
-
-	if LK.isDown("s") or LK.isDown("down") then
-		dy = dy + 1
-	end
-
-
-	if not(dx == 0 and dy == 0) then
+	if dir then
 	
 		-- target direction
 
-		self.targetRot = math.atan2(dy,dx)
+		self.targetRot = dir
 
 		-- rotate
 
@@ -109,8 +93,9 @@ function Player:treatInput(dt)
 
 		-- decelerate
 
-		self.speed = math.max(0, self.speed - self.accel * dt)
-
+		if self.subsystems.controls.active.stabilizer then
+			self.speed = math.max(0, self.speed - self.accel * dt)
+		end
 	end
 
 	-- apply speed

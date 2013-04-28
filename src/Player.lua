@@ -2,6 +2,7 @@ require "class"
 require "Shield"
 require "Controls"
 require "FiringSystem"
+require "EnergyDistribution"
 
 local LK = love.keyboard
 local LG = love.graphics
@@ -22,13 +23,14 @@ function Player:init()
 	self.speed = 0
 	self.maxSpeed = 20			-- pixels per second
 	self.accel = 30				-- pixels/s^2
-
+	
 	-- subsystems
 
 	self.subsystems = {
 		shield = Shield(),
 		controls = Controls(),
-		firingSystem = FiringSystem()
+		firingSystem = FiringSystem(),
+		energyDistribution = EnergyDistribution()
 	}
     gPlayer = self
 	return self
@@ -143,6 +145,8 @@ function Player:takeHit()
 	if(self.subsystems.shield.active) then
 		return nil
 	end
+	
+	self.subsystems.energyDistribution:decreaseEnergy();
 	
 	-- lose energy, cooldown?
 end

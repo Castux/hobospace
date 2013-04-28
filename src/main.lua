@@ -44,3 +44,7 @@ function loadImages()
 	end
 
 end
+
+function distanceObjects(o1,o2)
+	return math.abs((o1.x)-(o2.x))+math.abs((o1.y)-(o2.y))
+end

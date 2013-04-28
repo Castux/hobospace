@@ -11,9 +11,7 @@ function Space:init()
 
 	self.cameraX = 0
 	self.cameraY = 0
-
 	self.player = Player()
-
 	self.asteroids = {}
 	self.playerBullets = {}
 	self.asteroidWarp = 2000
@@ -26,6 +24,7 @@ function Space:init()
 		table.insert(self.asteroids, a)
 	end
 	gSpace = self
+	
 	return self
 end
 
@@ -111,7 +110,12 @@ end
 
 function Space:spawnPlayerBullet()
 
-local b = PlayerBullet()
-table.insert(self.playerBullets, b)
+	local b = PlayerBullet()
+	table.insert(self.playerBullets, b)
 
 end
+
+function Space:removeAsteroid(i)
+	table.remove(self.asteroids,i)
+end
+

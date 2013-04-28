@@ -31,7 +31,7 @@ function PlayerBullet:update(dt)
 	for i,v in pairs(gSpace.asteroids) do
 		local dist = distanceObjects(self,v)
 		
-		if(dist < 32) then
+		if(dist < v.size) then
 			gSpace:removeObject(gSpace.asteroids,v)
 			gSpace:removeObject(gSpace.playerBullets,self)
 		end

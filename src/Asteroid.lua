@@ -7,6 +7,8 @@ function Asteroid:init()
 	self.x = 0
 	self.y = 0
 	self.rot = 0
+	--a simple int to be used in distance collision
+	self.size = 64
 
 	self.vx = (math.random() - 0.5) * 100
 	self.vy = (math.random() - 0.5) * 100

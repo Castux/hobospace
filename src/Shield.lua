@@ -66,7 +66,7 @@ end
 
 function Shield:keypressed(k)
 
-	if k == ' ' then
+	if k == 'x' then
 		self:activate()
 	end
 

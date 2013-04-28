@@ -18,7 +18,7 @@ function Space:init()
 	self.playerBullets = {}
 	self.asteroidWarp = 2000
 
-	for i = 1,1000 do
+	for i = 1,100 do
 		local a = Asteroid()
 		a.x = (math.random() - 0.5) * self.asteroidWarp * 2
 		a.y = (math.random() - 0.5) * self.asteroidWarp * 2

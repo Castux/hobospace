@@ -20,7 +20,7 @@ function Player:init()
 	self.rotSpeed = math.pi		-- radians per second
 
 	self.speed = 0
-	self.maxSpeed = 40			-- pixels per second
+	self.maxSpeed = 20			-- pixels per second
 	self.accel = 30				-- pixels/s^2
 
 	-- subsystems

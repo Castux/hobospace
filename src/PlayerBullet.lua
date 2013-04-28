@@ -7,7 +7,7 @@ function PlayerBullet:init()
 	self.x = gPlayer.x
 	self.y = gPlayer.y
 	self.rot = 0
-	self.speed = 700
+	self.speed = 1000
 	
 	local vx,vy = math.cos(gPlayer.rot) * self.speed, math.sin(gPlayer.rot) * self.speed
 	self.vx = vx

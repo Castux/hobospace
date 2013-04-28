@@ -21,7 +21,7 @@ function Space:init()
 		a.x = (math.random() - 0.5) * self.asteroidWarp * 2
 		a.y = (math.random() - 0.5) * self.asteroidWarp * 2
 
-		table.insert(self.asteroids, a)
+		self.asteroids[a] = a
 	end
 	gSpace = self
 	
@@ -35,10 +35,10 @@ function Space:draw()
 
 	self:drawBackground()
 
-	for i,v in ipairs(self.asteroids) do
+	for i,v in pairs(self.asteroids) do
 		v:draw()
 	end
-	for i,v in ipairs(self.playerBullets) do
+	for i,v in pairs(self.playerBullets) do
 		v:draw()
 	end
 	self.player:draw()
@@ -71,7 +71,7 @@ function Space:update(dt)
 
 	local border = 1000
 
-	for i,v in ipairs(self.asteroids) do
+	for i,v in pairs(self.asteroids) do
 		v:update(dt)
 
 		-- let's do the time warp agaiiiiiin
@@ -89,7 +89,7 @@ function Space:update(dt)
 		end
 	end
 	
-	for i,v in ipairs(self.playerBullets) do
+	for k,v in pairs(self.playerBullets) do
 		v:update(dt)
 	end
 	
@@ -111,11 +111,11 @@ end
 function Space:spawnPlayerBullet()
 
 	local b = PlayerBullet()
-	table.insert(self.playerBullets, b)
+	self.playerBullets[b] = b
 
 end
 
-function Space:removeAsteroid(i)
-	table.remove(self.asteroids,i)
+function Space:removeObject(tbl,o)
+	tbl[o] = nil
 end
 

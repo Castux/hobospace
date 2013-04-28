@@ -44,12 +44,12 @@ function Player:update(dt)
 		end
 	end
 	
-	for i,v in ipairs(gSpace.asteroids) do
+	for i,v in pairs(gSpace.asteroids) do
 		local dist = distanceObjects(self,v)
 		
 		if(dist < 32) then
 			self:takeHit()
-			gSpace:removeAsteroid(i)
+			gSpace:removeObject(gSpace.asteroids,v)
 		end
 	end
 
@@ -139,5 +139,10 @@ function Player:drawHUD()
 end
 
 function Player:takeHit()
--- lose energy, cooldown?
+	--shield on?
+	if(self.subsystems.shield.active) then
+		return nil
+	end
+	
+	-- lose energy, cooldown?
 end

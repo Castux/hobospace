@@ -28,11 +28,12 @@ function PlayerBullet:update(dt)
 	self.x = self.x + self.vx * dt
 	self.y = self.y + self.vy * dt
 	
-	for i,v in ipairs(gSpace.asteroids) do
+	for i,v in pairs(gSpace.asteroids) do
 		local dist = distanceObjects(self,v)
 		
 		if(dist < 32) then
-			gSpace:removeAsteroid(i)
+			gSpace:removeObject(gSpace.asteroids,v)
+			gSpace:removeObject(gSpace.playerBullets,self)
 		end
 	end
 

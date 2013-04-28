@@ -32,8 +32,4 @@ end
 
 function FiringSystem:drawHUD()
 
-	local txt = ""
-
-	love.graphics.print("Controls system functional: " .. txt, 20, 20)
-
 end

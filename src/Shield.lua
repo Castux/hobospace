@@ -7,7 +7,7 @@ function Shield:init()
 	self.active = false
 	self.activationTimer = nil
 
-	self.duration = 1
+	self.duration = 0.5
 
 	self.coolingDown = false
 	self.cooldownTimer = nil

@@ -3,6 +3,7 @@ require "Shield"
 require "Controls"
 require "FiringSystem"
 require "EnergyDistribution"
+require "Warp"
 
 local LK = love.keyboard
 local LG = love.graphics
@@ -30,7 +31,8 @@ function Player:init()
 		shield = Shield(),
 		controls = Controls(),
 		firingSystem = FiringSystem(),
-		energyDistribution = EnergyDistribution()
+		energyDistribution = EnergyDistribution(),
+		warp = Warp()
 	}
     gPlayer = self
 	return self
@@ -79,6 +81,7 @@ end
 function Player:treatInput(dt)
 
 	self.subsystems.firingSystem:checkInput(dt)
+	self.subsystems.warp:checkInput(dt)
 	local dir = self.subsystems.controls:checkInput()
 
 	if dir then

@@ -1,6 +1,7 @@
 require "class"
 require "Shield"
 require "Controls"
+require "FiringSystem"
 
 local LK = love.keyboard
 local LG = love.graphics
@@ -27,8 +28,9 @@ function Player:init()
 	self.subsystems = {
 		shield = Shield(),
 		controls = Controls(),
+		firingSystem = FiringSystem()
 	}
-
+    gPlayer = self
 	return self
 end
 
@@ -65,6 +67,7 @@ end
 
 function Player:treatInput(dt)
 
+	self.subsystems.firingSystem:checkInput(dt)
 	local dir = self.subsystems.controls:checkInput()
 
 	if dir then

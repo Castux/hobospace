@@ -2,16 +2,17 @@ require "class"
 
 PlayerBullet = class()
 
-function PlayerBullet:init(vx,vy)
+function PlayerBullet:init()
 	
-	self.x = 0
-	self.y = 0
+	self.x = gPlayer.x
+	self.y = gPlayer.y
 	self.rot = 0
-
+	self.speed = 700
+	
+	local vx,vy = math.cos(gPlayer.rot) * self.speed, math.sin(gPlayer.rot) * self.speed
 	self.vx = vx
 	self.vy = vy
-
-	gPlayer = self
+	
 	return self
 end
 

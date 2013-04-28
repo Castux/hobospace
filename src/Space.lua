@@ -1,6 +1,7 @@
 require "class"
 require "Player"
 require "Asteroid"
+require "PlayerBullet"
 
 Space = class()
 
@@ -14,7 +15,7 @@ function Space:init()
 	self.player = Player()
 
 	self.asteroids = {}
-	self.bullets = {}
+	self.playerBullets = {}
 	self.asteroidWarp = 2000
 
 	for i = 1,1000 do
@@ -36,6 +37,9 @@ function Space:draw()
 	self:drawBackground()
 
 	for i,v in ipairs(self.asteroids) do
+		v:draw()
+	end
+	for i,v in ipairs(self.playerBullets) do
 		v:draw()
 	end
 	self.player:draw()
@@ -85,7 +89,11 @@ function Space:update(dt)
 			v.y = v.y + 2*border
 		end
 	end
-
+	
+	for i,v in ipairs(self.playerBullets) do
+		v:update(dt)
+	end
+	
 	self.player:update(dt)
 
 	self.cameraX = self.player.x
@@ -101,4 +109,9 @@ function Space:keypressed(k)
 
 end
 
+function Space:spawnPlayerBullet()
 
+local b = PlayerBullet()
+table.insert(self.playerBullets, b)
+
+end
